@@ -1,6 +1,7 @@
 package com.chattriggers.ctjs
 
 import com.chattriggers.ctjs.commands.Command
+import com.chattriggers.ctjs.engine.langs.js.JSContextFactory
 import com.chattriggers.ctjs.engine.module.ModuleManager
 import com.chattriggers.ctjs.minecraft.libs.ChatLib
 import com.chattriggers.ctjs.minecraft.libs.renderer.Renderer
@@ -52,6 +53,8 @@ object Reference {
             CTJS.images.clear()
         }
 
+        JSContextFactory.closeLoader()
+
         if (asCommand) {
             ChatLib.chat("&7Unloaded all of ChatTriggers")
         }
@@ -62,6 +65,7 @@ object Reference {
         Client.getMinecraft().gameSettings.saveOptions()
         unloadCT(false)
 
+        JSContextFactory.rebuildLoader()
         ChatLib.chat("&cReloading ChatTriggers scripts...")
 
         printLoadCompletionStatus(0f)
