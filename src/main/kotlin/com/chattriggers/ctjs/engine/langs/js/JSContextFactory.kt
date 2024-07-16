@@ -12,14 +12,15 @@ import java.net.URL
 import java.net.URLClassLoader
 
 object JSContextFactory : ContextFactory() {
-    private var classLoader = ModifiedURLClassLoader()
+    private var classLoader: ModifiedURLClassLoader? = null
+    var wrapCollection = true
     var optimize = true
 
-    fun addAllURLs(urls: List<URL>) = classLoader.addAllURLs(urls)
+    fun addAllURLs(urls: List<URL>) = classLoader!!.addAllURLs(urls)
 
-    fun closeLoader() = classLoader.close()
+    fun closeLoader() = classLoader!!.close()
 
-    fun rebuildLoader() {
+    fun setupLoader() {
         classLoader = ModifiedURLClassLoader()
     }
 
@@ -33,7 +34,7 @@ object JSContextFactory : ContextFactory() {
         cx.errorReporter = JSErrorReporter(JSLoader.console.writer.printWriter)
         cx.wrapFactory = object : WrapFactory() {
             override fun wrap(cx: Context?, scope: Scriptable?, obj: Any?, staticType: Class<*>?): Any? {
-                if (obj is Collection<*>) {
+                if (wrapCollection && obj is Collection<*>) {
                     // TODO: Wrapping an array is somewhat slow
                     return super.wrap(cx, scope, obj.toTypedArray(), staticType)
                 }

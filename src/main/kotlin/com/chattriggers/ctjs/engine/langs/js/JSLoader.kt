@@ -59,6 +59,7 @@ object JSLoader : ILoader {
 
     override fun clearTriggers() {
         triggers.clear()
+        JSContextFactory.closeLoader()
     }
 
     override fun removeTrigger(trigger: Trigger) {
@@ -306,6 +307,7 @@ object JSLoader : ILoader {
     }
 
     private fun instanceContexts(files: List<URL>) {
+        JSContextFactory.setupLoader()
         JSContextFactory.addAllURLs(files)
 
         moduleContext = JSContextFactory.enterContext()

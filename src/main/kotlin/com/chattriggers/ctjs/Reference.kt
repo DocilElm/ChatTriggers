@@ -53,8 +53,6 @@ object Reference {
             CTJS.images.clear()
         }
 
-        JSContextFactory.closeLoader()
-
         if (asCommand) {
             ChatLib.chat("&7Unloaded all of ChatTriggers")
         }
@@ -65,7 +63,6 @@ object Reference {
         Client.getMinecraft().gameSettings.saveOptions()
         unloadCT(false)
 
-        JSContextFactory.rebuildLoader()
         ChatLib.chat("&cReloading ChatTriggers scripts...")
 
         printLoadCompletionStatus(0f)
