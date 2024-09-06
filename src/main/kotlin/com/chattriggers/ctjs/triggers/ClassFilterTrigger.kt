@@ -1,8 +1,10 @@
 package com.chattriggers.ctjs.triggers
 
 import com.chattriggers.ctjs.engine.ILoader
+import com.chattriggers.ctjs.engine.langs.js.JSLoader.console
 import com.chattriggers.ctjs.minecraft.wrappers.entity.Entity
 import com.chattriggers.ctjs.minecraft.wrappers.entity.TileEntity
+import com.chattriggers.ctjs.printTraceToConsole
 import com.chattriggers.ctjs.utils.kotlin.MCEntity
 import com.chattriggers.ctjs.utils.kotlin.MCTileEntity
 import net.minecraft.network.Packet
@@ -33,9 +35,14 @@ abstract class ClassFilterTrigger(method: Any, val triggerType: TriggerType, loa
     fun setFilteredClasses(classes: List<Class<*>>) = apply { triggerClasses = classes }
 
     override fun trigger(args: Array<out Any?>) {
-        val placeholder = evalTriggerType(args)
-        if(triggerClasses.isEmpty() || triggerClasses.any { it.isInstance(placeholder) })
-            callMethod(args)
+        try {
+            val placeholder = evalTriggerType(args)
+            if(triggerClasses.isEmpty() || triggerClasses.any { it.isInstance(placeholder) })
+                callMethod(args)
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            e.printTraceToConsole(console)
+        }
     }
 
     abstract fun evalTriggerType(args: Array<out Any?>): Any
