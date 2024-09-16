@@ -167,7 +167,7 @@ object JSLoader : ILoader {
     override fun asmInvokeLookup(module: Module, functionURI: URI): MethodHandle {
         return wrapInContext {
             try {
-                val returned = require.loadCTModule(module.name, functionURI)
+                val returned = require.loadCTModule("${module.name}-asmex$$", functionURI)
                 val func = ScriptableObject.getProperty(returned, "default") as Callable
 
                 // When a call to this function ID is made, we always want to point it
