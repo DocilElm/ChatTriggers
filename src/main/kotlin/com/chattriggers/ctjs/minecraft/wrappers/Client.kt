@@ -183,7 +183,7 @@ abstract class Client {
         fun getMemoryUsage(): Int = ((getTotalMemory() - getFreeMemory()) * 100 / getMaxMemory().toFloat()).roundToInt()
 
         @JvmStatic
-        fun getSystemTime(): Long = Minecraft.getSystemTime()
+        fun getSystemTime(): Long = System.currentTimeMillis()
 
         @JvmStatic
         fun getMouseX(): Float {
