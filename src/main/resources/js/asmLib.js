@@ -151,12 +151,14 @@ class InjectBuilder extends ASMBuilder {
         return this;
     }
 
-    instructions(insnList) {
+    instructions(insnList, custom = false) {
         // Wrap the insnList in a proxy so we can "add" methods to the
         // InsnListBuilder provided by ASMHelper. This proxy delegates
         // all gets and calls to the target handler except those specified
         // in the 'get' trap
-        this.insnList = $ => insnList(proxyInsnList($));
+        if (custom) {
+            this.insnList = $ => insnList(proxyInsnList($), $)
+        } else this.insnList = $ => insnList(proxyInsnList($));
 
         return this;
     }
