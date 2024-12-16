@@ -68,7 +68,8 @@ object ModuleUpdater {
 
             "Checking for update in ${metadata.name}".printToConsole()
 
-            val url = "${CTJS.WEBSITE_ROOT}/api/modules/${metadata.name}/metadata?modVersion=${Reference.MODVERSION}"
+            val url = if (!Config.customImports) "${CTJS.WEBSITE_ROOT}/api/modules/${metadata.name}/metadata?modVersion=${Reference.MODVERSION}"
+                else "https://raw.githubusercontent.com/DocilElm/customimports/refs/heads/main/${metadata.name.lowercase()}/metadata.json"
             val connection = CTJS.makeWebRequest(url)
 
             val newMetadataText = connection.getInputStream().bufferedReader().readText()
@@ -137,7 +138,9 @@ object ModuleUpdater {
         val downloadZip = File(modulesFolder, "currDownload.zip")
 
         try {
-            val url = "${CTJS.WEBSITE_ROOT}/api/modules/$name/scripts?modVersion=${Reference.MODVERSION}"
+             val url = if (!Config.customImports) "${CTJS.WEBSITE_ROOT}/api/modules/$name/scripts?modVersion=${Reference.MODVERSION}"
+                else "https://raw.githubusercontent.com/DocilElm/customimports/refs/heads/main/${name.lowercase()}/download.zip"
+
             val connection = CTJS.makeWebRequest(url)
             FileUtils.copyInputStreamToFile(connection.getInputStream(), downloadZip)
             FileSystems.newFileSystem(downloadZip.toPath(), null).use {
@@ -155,7 +158,7 @@ object ModuleUpdater {
                     }
                     Files.copy(path, resolvedPath, StandardCopyOption.REPLACE_EXISTING)
                 }
-                return DownloadResult(realName, connection.getHeaderField("CT-Version"))
+                return DownloadResult(realName, connection.getHeaderField("CT-Version") ?: "2.2.1")
             }
         } catch (exception: Exception) {
             exception.printTraceToConsole()

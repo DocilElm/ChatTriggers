@@ -69,6 +69,14 @@ object Config : Vigilant(File(CTJS.configLocation, "ChatTriggers.toml"), sorting
 
     @Property(
         PropertyType.SWITCH,
+        name = "Custom Import",
+        category = "General",
+        description = "Uses a custom website (github repo) to import modules in rather than the normal website.",
+    )
+    var customImports = false
+
+    @Property(
+        PropertyType.SWITCH,
         name = "Clear console on CT load",
         category = "Console",
     )
