@@ -18,7 +18,6 @@ import com.chattriggers.ctjs.utils.Config
 import com.chattriggers.ctjs.utils.UpdateChecker
 import com.chattriggers.ctjs.utils.console.LogType
 import com.google.gson.Gson
-import gg.essential.vigilance.Vigilance
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
@@ -28,14 +27,13 @@ import java.io.File
 import java.net.URL
 import java.net.URLConnection
 import java.security.KeyStore
-import javax.net.ssl.HttpsURLConnection
 import java.security.MessageDigest
 import java.util.*
+import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 import kotlin.concurrent.thread
-import kotlin.math.log
 
 @Mod(
     modid = Reference.MODID,
@@ -43,7 +41,7 @@ import kotlin.math.log
     version = Reference.MODVERSION,
     clientSideOnly = true,
     modLanguage = "Kotlin",
-    modLanguageAdapter = "gg.essential.api.utils.KotlinAdapter"
+    modLanguageAdapter = "com.chattriggers.ctjs.KotlinAdapter"
 )
 object CTJS {
     const val WEBSITE_ROOT = "https://www.chattriggers.com"

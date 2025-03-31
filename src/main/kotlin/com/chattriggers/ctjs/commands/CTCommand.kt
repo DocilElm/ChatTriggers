@@ -11,7 +11,6 @@ import com.chattriggers.ctjs.minecraft.objects.message.TextComponent
 import com.chattriggers.ctjs.printTraceToConsole
 import com.chattriggers.ctjs.utils.Config
 import com.chattriggers.ctjs.utils.kotlin.toVersion
-import gg.essential.api.utils.GuiUtil
 import net.minecraft.command.CommandBase
 import net.minecraft.command.CommandException
 import net.minecraft.command.ICommandSender
@@ -72,7 +71,7 @@ object CTCommand : CommandBase() {
             "console" ->
                 if (args.size == 1) ModuleManager.generalConsole.showConsole()
                 else ModuleManager.getConsole(args[1]).showConsole()
-            "config", "settings", "setting" -> GuiUtil.open(Config.gui()!!)
+            "config", "settings", "setting" -> GuiHandler.openGui(Config.gui()!!)
             "sim", "simulate" -> ChatLib.simulateChat(args.copyOfRange(1, args.size).joinToString(" "))
             "dump" -> dump(args)
             "copy" -> copyArgsToClipboard(args)
